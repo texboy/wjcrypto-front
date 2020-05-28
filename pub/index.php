@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="shortcut icon" href="media/favicon-update.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>WJcrypto</title>
 </head>
 <body>
@@ -21,12 +22,11 @@
     <fieldset>
         <label for="username">Username:</label>
         <input type="text" required id="username" name="username">
-
         <label for="password">Password:</label>
         <input type="password" required id="password" name="password">
-        <a href="newaccount.php" >Create new account</a>
+        <a href="newaccount.php" id="new-account" >Create new account</a>
     </fieldset>
-    <button type="submit" id="submit">Sign Up</button>
+    <button type="submit" class="disabled-button" disabled id="submit">Sign Up</button>
 </form>
 <script src="js/login.js"></script>
 </body>

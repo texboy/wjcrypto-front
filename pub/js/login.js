@@ -4,22 +4,25 @@ const form = {
     password: document.getElementById('password'),
     submit: document.getElementById('submit'),
     messages: document.getElementById('form-messages'),
+    link: document.getElementById('new-account'),
 };
+
+toggleSubmitButton();
 
 form.submit.addEventListener('click', (event)=> {
     event.preventDefault();
-
+    toggleSubmitButton();
     const request = new XMLHttpRequest();
     request.onload = () => {
-        let responseOjb = null;
+        let responseObj = null;
         try {
-            responseOjb = JSON.parse(request.responseText);
+            responseObj = JSON.parse(request.responseText);
         } catch (e) {
             console.error('Could not parse json');
         }
 
-        if (responseOjb) {
-            handleReponse(responseOjb);
+        if (responseObj) {
+            handleReponse(responseObj, request, basicAuth);
         }
     };
     const basicAuth = 'Basic ' + btoa(form.username.value + ":" + form.password.value);
@@ -29,15 +32,23 @@ form.submit.addEventListener('click', (event)=> {
 
     if (form.username.value === "" || form.password.value === "") {
         addMessageToForm('Username or Password cannot be empty')
+        toggleSubmitButton();
     } else {
-        console.log(form.username.value === "");
         request.send();
     }
 });
 
-function handleReponse (responseOjb) {
-    if (responseOjb.code == 401 ) {
-        addMessageToForm(responseOjb.error);
+function handleReponse (responseObj, request, basicAuth) {
+    if (request.status === 200) {
+        clearMessages();
+        addLoaderRing();
+        addAuthUserCookie(basicAuth, JSON.stringify(responseObj));
+        setTimeout(function () {
+            window.location = 'home.php';
+        }, 1000);
+    }else {
+        toggleSubmitButton();
+        addMessageToForm(responseObj.error);
     }
 }
 function addMessageToForm(message) {
@@ -51,6 +62,26 @@ function addMessageToForm(message) {
 function clearMessages() {
     while (form.messages.firstChild) {
         form.messages.removeChild(form.messages.firstChild);
-        form.messages.style.display = "node";
+        form.messages.style.display = "none";
     }
+}
+
+function toggleSubmitButton() {
+    form.submit.disabled = !form.submit.disabled;
+    form.submit.classList.toggle('disabled-button');
+}
+
+function addLoaderRing() {
+    let loader = document.createElement('i');
+    loader.innerHTML = ' <i class="fa fa-spinner fa-spin"></i>'
+    form.submit.appendChild(loader);
+    form.link.removeAttribute('href');
+}
+
+function addAuthUserCookie(authString, userJson) {
+    var date = new Date();
+    date.setTime(date.getTime() + (1*24*60*60*1000));
+    var expires = "expires="+ date.toUTCString();
+    document.cookie = 'authString' + "=" + authString + ";" + expires + ";path=/";
+    document.cookie = 'userJson' + "=" + userJson + ";" + expires + ";path=/";
 }
