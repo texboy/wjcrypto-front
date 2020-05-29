@@ -282,3 +282,7 @@ ul {
     background-image: linear-gradient( #ee1b24, #f5565c);
 }
 
+#logout {
+    display: block;
+    margin-left: 42%;
+}

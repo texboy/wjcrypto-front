@@ -20,7 +20,6 @@
             <button class="go-to-login" id="ok-button" type="button">Ok!</button>
         </div>
         <div class="modal-footer">
-            <h3>Modal Footer</h3>
         </div>
     </div>
 </div>
@@ -39,9 +38,8 @@
         <span class="text-field">Address: <span id="address">Rua 1, Nº 1, Bairo, Cidade, Pais, 8888888</span></span>
         <span class="text-field" id="doc-1-label">RG: <span id="doc-1-label">123465489</span></span>
         <span class="text-field" id="doc-2-label">CPF: <span id="doc-2-label">123465432</span></span>
-        <span class="text-field" id="dof-label">Date of birth: <span id="dof">07/03/1998</span></span>
+        <span class="text-field" id="dof-label">Date of birth: <span id="dof"></span></span>
     </div>
-    <button type="button" id="statement-button">Electronic Statement</button>
     <button type="button" id="transaction-button">Transaction</button>
     <div class = "closed-transaction-form" id="transaction-div">
         <ul id="form-messages"></ul>
@@ -64,10 +62,11 @@
                <input type="number" required id="amount" name="amount">
                <button type="submit" id="submit-transaction">Submit Transaction</button>
            </fieldset>
-       </form>
+        </form>
     </div>
-
+    <a href="#" id="logout">Logout</a>
 </div>
+
 <script src="js/home.js"></script>
 </body>
 </html>

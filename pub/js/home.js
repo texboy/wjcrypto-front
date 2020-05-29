@@ -62,11 +62,7 @@ function changeCustomerType() {
    }
     document.getElementById('doc-1-label').innerText = firstDoc + user.customer.document[0].document_number;
     document.getElementById('doc-2-label').innerText = secondDoc + user.customer.document[1].document_number;
-    document.getElementById('dof-label').innerText = dateName + user.customer.dof ;
-}
-
-function changeCustomerDate() {
-
+    document.getElementById('dof-label').innerText = dateName + new Date(user.customer.dof).toLocaleDateString().split(' ')[0];
 }
 
 function getAuthCookies() {
@@ -207,3 +203,15 @@ function openSuccessModal() {
     button.onclick = () => {window.location.reload()} ;
     modal.style.display = "block";
 }
+
+function clearAuthCookies() {
+    document.cookie = "authString=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userJson=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+document.getElementById('logout').addEventListener('click', (event) => {
+    event.preventDefault();
+    clearAuthCookies();
+    window.location = "index.php";
+
+})
